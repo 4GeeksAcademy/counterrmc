@@ -1,12 +1,17 @@
-
-/* 
-
-    You can write your own styles here...
+.img {
     
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -100;
+}
+.p {
     
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
-
-*/
+    width: 100%;
+    position: absolute;
+    font-size: x-large;
+    top: 0;
+    left: 0;
+    z-index: -100;
+  }
