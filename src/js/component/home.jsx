@@ -1,31 +1,42 @@
 import React from "react";
-
+import { useState, useRef, useEffect } from "react";
 
 function reloj() {
-	const [timer, setTimer] = React.useState(99);
-	const id = React.useRef(null);
-	
-	React.useEffect(() => {
-	  id.current = window.setInterval(() => {
-		setTimer((time) => time - 1);
-	  }, 1000);
-	  return () => clear();
+	const [count, setCount] = useState(0);
+
+
+
+	let timer1 = useRef();
+	useEffect(() => {
+		timer1 = setInterval(() => {
+			setCount((prev) => {
+				if (prev >= 9999) {
+					return 0;
+				} else {
+					return prev + 1;
+				}
+			});
+		}, 1000);
+
+		return () => clearInterval(timer1);
 	}, []);
-  
-	React.useEffect(() => {
-	  if (timer === 0) {
-		clear();
-	  }
-	}, [timer]);
-  
+	let counter = count.toString().padStart(4, 0);
+
 	return (
-	  <div className="reloj">
-		<img className="img" src="https://media.newyorker.com/photos/62e85962fdcd53b7bf03b3b3/3:2/w_3000,h_2000,c_limit/gettyimages-681898.jpg"/>
-		<div className="position-absolute top-50 start-50 translate-middle badge text-bg-danger text-wrap fs-1">
-		<p>00{timer} </p>
-		</div>
-	  </div>
-	);
-  }
+	<div className="row">
+		<div className="card text-center col-6" style={{width:'400px'}}>
+			
+			<img src="https://cdn-images-3.listennotes.com/podcasts/se%C3%B1ores-dejo-todo/t2-e14-el-tano-pasman-pEcqXrynbPC-BMXwpCeJDEr.1400x1400.jpg"/>
+			<div className="card-img-overlay text-warning" style={{position: "absolute",
+			top: "50px", left:"45px", width:"120px", height:"105px" }}>
+				<h2 className="position-absolute top-50 start-50 translate-middle">{counter}</h2>
+			</div>
+			<h1>No te detengas Carajo!!!</h1>
 		
-  export default reloj
+		</div>
+	</div>
+	);
+}
+
+
+export default reloj
