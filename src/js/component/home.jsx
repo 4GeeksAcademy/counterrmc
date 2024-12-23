@@ -1,43 +1,20 @@
 import React from "react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-function reloj() {
-	const [count, setCount] = useState(0);
-	const [count2, setCount2] = useState(0);
+const Timer =()=> {
+	const [counter1, setCounter1] = useState(0);
+	const [counter2, setCounter2] = useState([0,0,0,0]);
+	const [reverse, setReverse] = useState(0);
 
+	useEffect (()=>{
+		const interval = setInterval(()=>{
+			const c2Array = counter1.toString().padStart(4,'0').split('');
+			setCounter2(c2Array);
+			setCounter1((prevCounter1)=>prevCounter1+1);},1000);
 
+			
 
-	let timer1 = useRef();
-	useEffect(() => {
-		timer1 = setInterval(() => {
-			setCount((prev) => {
-				if (prev >= 9999) {
-					return 0;
-				} else {
-					return prev + 1;
-				}
-			});
-		}, 1000);
-
-		return () => clearInterval(timer1);
-	}, []);
-	let timer2 = useRef();
-	useEffect(() => {
-		timer2 = setInterval(() => {
-			setCount2((prev) => {
-				if (prev <= 0) {
-					return 9999;
-				} else {
-					return prev - 1;
-				}
-			});
-		}, 1000);
-
-		return () => clearInterval(timer2);
-	}, []);
-	let counter1 = count.toString().padStart(4, 0);
-	let counter2 = count2.toString().padStart(4, 0);
-
+			return()=>clearInterval(interval);},[counter1]);
 
 
 	return (
@@ -53,53 +30,15 @@ function reloj() {
 					top: "50px", left: "45px", width: "120px", height: "105px"
 				}}>
 					<h2 className="position-absolute top-50 start-50 translate-middle">
-						{counter1}</h2>
+						{counter2[0]}{counter2[1]}{counter2[2]}{counter2[3]}</h2>
 				</div>
 				<h1>No te detengas Carajo!!!</h1>
 			</div>
 
-
-
-
-			<button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-				Haz enojar a Tano!
-			</button>
-
-
-			<div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div className="modal-dialog">
-					<div className="modal-content">
-						<div className="modal-header">
-							
-							<button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div className="modal-body">
-							<div className="card text-center col-6" style={{ width: '400px' }}>
-
-
-								<img src="https://www.agencianova.com/data/fotos2/bbx_307685074_tano.png" />
-								<div className="card-img-overlay text-danger" style={{
-									position: "absolute",
-									top: "15px", left: "20px", width: "120px", height: "105px"
-								}}>
-									<h2 className="position-absolute top-50 start-50 translate-middle">{counter2}</h2>
-								</div>
-								<h1>LPQM Pariooo !!!</h1>
-
-							</div>
-
-
-
-
-						</div>
-						
-					</div>
-				</div>
-			</div>
 
 		</>
 	);
 }
 
 
-export default reloj
+export default Timer
